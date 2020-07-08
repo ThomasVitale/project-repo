@@ -1,18 +1,20 @@
 # Greeting Service
 
-## Run the application
+## Application tasks
+
+### Run the application
 
 ```bash
 ./gradlew bootRun
 ```
 
-## Run the tests
+### Run the tests
 
 ```bash
 ./gradlew test
 ```
 
-## Package the application
+### Package the application
 
 ```bash
 ./gradlew bootJar
