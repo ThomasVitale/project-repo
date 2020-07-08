@@ -1,6 +1,6 @@
 # Greeting Service
 
-Initialize a Spring project with your favourite method, for example from Spring Initialzr or your IDE.
+Initialize a Spring project with your favorite method, for example from Spring Initialzr (https://start.spring.io/) or your IDE.
 During the initialization, you need to select the "Spring Web" dependency.
 
 If you prefer, you can initialize the project with this command:
@@ -12,5 +12,5 @@ curl https://start.spring.io/starter.tgz -d groupId=com.arcticgreetings -d artif
 For using Maven instead of Gradle:
 
 ```bash
-curl https://start.spring.io/starter.tgz -d groupId=com.arcticgreetings -d artifactId=greeting-service -d name=greeting-service -d packageName=com.arcticgreetings.greeting-service -d dependencies=web -d javaVersion=11 -d type=maven-project -o greeting-service.zip
+curl https://start.spring.io/starter.tgz -d groupId=com.arcticgreetings -d artifactId=greeting-service -d name=greeting-service -d packageName=com.arcticgreetings.greeting-service -d dependencies=web -d javaVersion=11 -o greeting-service.zip
 ```
