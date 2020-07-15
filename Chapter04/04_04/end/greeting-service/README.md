@@ -30,3 +30,9 @@ java -Dgreetings.message="Welcome to the Arctic from JVM" -jar build/libs/greeti
 export GREETINGS_MESSAGE="Welcome to the Arctic from ENV"
 java -jar build/libs/greeting-service-1.0.0.jar
 ```
+
+## Refresh configuration
+
+```bash
+http POST :8080/actuator/refresh
+```
