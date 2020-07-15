@@ -1,0 +1,11 @@
+greetings:
+  message: "Welcome to the North Pole, my friend!"
+spring:
+  profiles:
+    #active: "dev"
+    #active: "prod"
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: refresh
