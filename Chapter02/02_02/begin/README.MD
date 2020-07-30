@@ -1,6 +1,6 @@
 # Greeting Service
 
-Initialize a Spring project with your favorite method, for example from Spring Initialzr (https://start.spring.io/) or your IDE.
+Initialize a Spring project with your favorite method, for example from [Spring Initialzr](https://start.spring.io/) or your IDE.
 During the initialization, you need to select the "Spring Web" dependency.
 
 If you prefer, you can initialize the project with this command:
