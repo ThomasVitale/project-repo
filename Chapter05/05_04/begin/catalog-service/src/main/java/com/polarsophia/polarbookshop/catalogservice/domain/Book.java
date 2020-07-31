@@ -2,7 +2,6 @@ package com.polarsophia.polarbookshop.catalogservice.domain;
 
 import com.polarsophia.polarbookshop.catalogservice.persistence.BaseEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.*;
 import java.time.Year;
@@ -10,23 +9,19 @@ import java.time.Year;
 @Entity
 public class Book extends BaseEntity {
 
-    @Column(unique = true, nullable = false, updatable = false)
     @NotBlank(message = "The book ISBN must be defined.")
     @Pattern(regexp = "^(97([89]))?\\d{9}(\\d|X)$", message = "The ISBN format must follow the standards ISBN-10 or ISBN-13.")
     private String isbn;
 
-    @Column(nullable = false)
     @NotBlank(message = "The book title must be defined.")
     private String title;
 
-    @Column(nullable = false)
     @NotBlank(message = "The book author must be defined.")
     private String author;
 
     @PastOrPresent(message = "The book cannot have been published in the future.")
     private Year publishingYear;
 
-    @Column(nullable = false)
     @NotNull(message = "The book price must be defined.")
     @Positive(message = "The book price must be greater than zero.")
     private Double price;
