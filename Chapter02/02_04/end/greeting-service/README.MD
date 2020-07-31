@@ -31,7 +31,7 @@
 ### Run application as Docker container
 
 ```bash
-docker run --name greeting-service -p 8080:8080 arcticgreetings.com/greeting-service:1.0.0
+docker run --name greeting-service -p 8080:8080 arcticgreetings/greeting-service:0.0.1-SNAPSHOT
 ```
 
 ### Stop application Docker container
@@ -49,7 +49,7 @@ docker rm greeting-service
 ### Remove application Docker image
 
 ```bash
-docker rmi arcticgreetings.com/greeting-service:1.0.0
+docker rmi arcticgreetings/greeting-service:0.0.1-SNAPSHOT
 ```
 
 ## Kubernetes tasks
@@ -59,13 +59,19 @@ docker rmi arcticgreetings.com/greeting-service:1.0.0
 Before running the command, make sure you have built the Docker image as explained above.
 
 ```bash
-kubectl create deployment greeting-service-deployment --image=arcticgreetings.com/greeting-service:1.0.0
+kubectl create deployment greeting-service-deployment --image=arcticgreetings/greeting-service:0.0.1-SNAPSHOT
 ```
 
 ### Create Service for application Deployment
 
 ```bash
-kubectl expose deployment greeting-service-deployment --type=LoadBalancer --name=my-service --port=8080
+kubectl expose deployment greeting-service-deployment --type=ClusterIP --name=my-service --port=8080
+```
+
+### Port forwarding from localhost to Kubernetes cluster
+
+```bash
+kubectl port-forward service/my-service 8000:8080
 ```
 
 ### Delete Deployment for application container

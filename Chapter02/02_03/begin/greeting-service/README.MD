@@ -31,7 +31,7 @@
 ### Run application as Docker container
 
 ```bash
-docker run --name greeting-service -p 8080:8080 arcticgreetings.com/greeting-service:1.0.0
+docker run --name greeting-service -p 8080:8080 arcticgreetings/greeting-service:0.0.1-SNAPSHOT
 ```
 
 ### Stop application Docker container
@@ -49,5 +49,5 @@ docker rm greeting-service
 ### Remove application Docker image
 
 ```bash
-docker rmi arcticgreetings.com/greeting-service:1.0.0
+docker rmi arcticgreetings/greeting-service:0.0.1-SNAPSHOT
 ```
