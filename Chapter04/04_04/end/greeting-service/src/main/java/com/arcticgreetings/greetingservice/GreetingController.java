@@ -8,6 +8,6 @@ public class GreetingController {
 
     @GetMapping("greetings")
     public String getGreetings() {
-        return "Welcome to the North Pole, my friend!";
+        return "Welcome to the Arctic, my friend!";
     }
 }
