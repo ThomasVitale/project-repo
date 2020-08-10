@@ -4,25 +4,25 @@
 
 ### Run PostgreSQL as a Docker container
 
-docker run --name polardb -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=polardb -p 5432:5432 -d postgres:13
+docker run --name polardb_catalog -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=polardb_catalog -p 5432:5432 -d postgres:13
 
 ### Stop PostgreSQL container
 
-docker stop polardb
+docker stop polardb_catalog
 
 ### Start PostgreSQL container
 
-docker start polardb
+docker start polardb_catalog
 
 ### Remove PostgreSQL container
 
-docker remove polardb
+docker remove polardb_catalog
 
 ## Managing tasks
 
 ### Starting an interactive psql console
 
-docker exec -it polardb psql -U admin -d polardb
+docker exec -it polardb_catalog psql -U admin -d polardb_catalog
 
 ### List all databases
 
@@ -30,7 +30,7 @@ docker exec -it polardb psql -U admin -d polardb
 
 ### Connect to specific database
 
-\connect polardb
+\connect polardb_catalog
 
 ### Quit interactive psql console
 

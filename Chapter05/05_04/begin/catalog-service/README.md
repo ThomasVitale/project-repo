@@ -11,5 +11,5 @@
 ### Run the application
 
 ```bash
-java -jar build/libs/catalog-service-1.0.0.jar
+java -jar build/libs/catalog-service-0.0.1-SNAPSHOT.jar
 ```

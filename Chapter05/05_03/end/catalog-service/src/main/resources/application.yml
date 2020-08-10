@@ -12,7 +12,7 @@ spring:
   datasource:
     username: admin
     password: admin
-    url: jdbc:postgresql://localhost:5432/polardb
+    url: jdbc:postgresql://localhost:5432/polardb_catalog
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 20
@@ -20,4 +20,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
