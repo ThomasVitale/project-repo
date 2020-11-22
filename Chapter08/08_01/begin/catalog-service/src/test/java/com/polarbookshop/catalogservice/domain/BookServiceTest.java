@@ -24,7 +24,7 @@ class BookServiceTest {
     @Test
     void whenBookToCreateAlreadyExistsThenThrows() {
         String bookIsbn = "1234561232";
-        Book bookToCreate = new Book(bookIsbn, "Title", "Author", Year.of(2000), 9.90);
+        Book bookToCreate = new Book(1L, bookIsbn, "Title", "Author", Year.of(2000), 9.90);
         when(bookRepository.existsByIsbn(bookIsbn)).thenReturn(true);
         assertThatThrownBy(() -> bookService.addBookToCatalog(bookToCreate))
                 .isInstanceOf(BookAlreadyExistsException.class)
@@ -34,7 +34,7 @@ class BookServiceTest {
     @Test
     void whenBookToUpdateNotFoundThenThrows() {
         String bookIsbn = "1234561234";
-        Book bookToUpdate = new Book(bookIsbn, "Title", "Author", Year.of(2000), 12.90);
+        Book bookToUpdate = new Book(1L, bookIsbn, "Title", "Author", Year.of(2000), 12.90);
         when(bookRepository.findByIsbn(bookIsbn)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> bookService.editBookDetails(bookIsbn, bookToUpdate))
                 .isInstanceOf(BookNotFoundException.class)

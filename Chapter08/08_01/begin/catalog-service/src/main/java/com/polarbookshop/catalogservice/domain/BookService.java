@@ -1,18 +1,18 @@
 package com.polarbookshop.catalogservice.domain;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Collection;
 import java.util.Optional;
 
-@Service
-public class BookService {
-    private final BookRepository bookRepository;
+import lombok.RequiredArgsConstructor;
 
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class BookService {
+
+    private final BookRepository bookRepository;
 
     public Collection<Book> viewBookList() {
         return bookRepository.findAllOrderByTitle();

@@ -5,6 +5,7 @@ import java.util.Collection;
 import com.polarbookshop.orderservice.order.domain.Order;
 import com.polarbookshop.orderservice.order.domain.OrderNotFoundException;
 import com.polarbookshop.orderservice.order.domain.OrderService;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("orders")
+@RequiredArgsConstructor
 public class OrderController {
 
 	private final OrderService orderService;
-
-	public OrderController(OrderService orderService) {
-		this.orderService = orderService;
-	}
 
 	@GetMapping
 	public Collection<Order> getAllOrders() {
@@ -36,6 +34,6 @@ public class OrderController {
 
 	@PostMapping
 	public Order submitOrder(@RequestBody OrderRequest orderRequest) {
-		return orderService.submitOrder(orderRequest.getIsbn());
+		return orderService.submitOrder(orderRequest.getIsbn(), orderRequest.getQuantity());
 	}
 }

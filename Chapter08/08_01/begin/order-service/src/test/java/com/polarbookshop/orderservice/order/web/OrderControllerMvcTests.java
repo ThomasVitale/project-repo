@@ -34,5 +34,4 @@ class OrderControllerMvcTests {
 				.andExpect(status().isNotFound())
 				.andExpect(content().string("The order with id " + orderId + " was not found."));
 	}
-
 }
