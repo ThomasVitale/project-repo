@@ -38,13 +38,13 @@ public class Order extends BaseEntity {
 
 	private String bookName;
 
+	@Positive(message = "The book price must be a positive number.")
+	private Double bookPrice;
+
 	@NotNull(message = "The book quantity must be defined.")
 	@Min(value = 1, message = "You must order at least 1 item.")
 	@Max(value = 5, message = "You cannot order more than 5 items.")
 	private Integer quantity;
-
-	@Positive(message = "The price must be a positive number.")
-	private Double price;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "The order status must be defined.")

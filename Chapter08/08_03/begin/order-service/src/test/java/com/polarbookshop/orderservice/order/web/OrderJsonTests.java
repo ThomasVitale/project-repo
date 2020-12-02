@@ -18,16 +18,18 @@ class OrderJsonTests {
 
     @Test
     void testSerialize() throws Exception {
-        Order order = new Order("1234567890", "Book Title", "Book Author", 9.90, OrderStatus.IN_PROGRESS);
+        Order order = new Order(1L, "1234567890", "Book Name", 1, 9.90, OrderStatus.ACCEPTED);
+        assertThat(json.write(order)).extractingJsonPathNumberValue("@.id")
+                .isEqualTo(1);
         assertThat(json.write(order)).extractingJsonPathStringValue("@.bookIsbn")
                 .isEqualTo("1234567890");
-        assertThat(json.write(order)).extractingJsonPathStringValue("@.bookTitle")
-                .isEqualTo("Book Title");
-        assertThat(json.write(order)).extractingJsonPathStringValue("@.bookAuthor")
-                .isEqualTo("Book Author");
-        assertThat(json.write(order)).extractingJsonPathNumberValue("@.bookPrice")
+        assertThat(json.write(order)).extractingJsonPathStringValue("@.bookName")
+                .isEqualTo("Book Name");
+        assertThat(json.write(order)).extractingJsonPathNumberValue("@.quantity")
+                .isEqualTo(1);
+        assertThat(json.write(order)).extractingJsonPathNumberValue("@.price")
                 .isEqualTo(9.90);
         assertThat(json.write(order)).extractingJsonPathStringValue("@.status")
-                .isEqualTo("IN_PROGRESS");
+                .isEqualTo("ACCEPTED");
     }
 }

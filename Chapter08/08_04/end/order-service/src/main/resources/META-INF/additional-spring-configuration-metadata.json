@@ -4,5 +4,6 @@
       "name": "polar.book-service-url",
       "type": "java.lang.String",
       "description": "The URL to contact the Book Service."
-  }
-] }
+    }
+  ]
+}

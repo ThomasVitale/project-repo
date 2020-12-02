@@ -1,12 +1,13 @@
 package com.polarbookshop.orderservice.order.web;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequest {
 	private String isbn;
+	private Integer quantity;
 }

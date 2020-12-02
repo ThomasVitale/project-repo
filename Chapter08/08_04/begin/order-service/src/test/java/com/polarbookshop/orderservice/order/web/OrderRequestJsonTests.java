@@ -1,6 +1,5 @@
 package com.polarbookshop.orderservice.order.web;
 
-import com.polarbookshop.orderservice.order.domain.Order;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ class OrderRequestJsonTests {
 
     @Test
     void testDeserialize() throws Exception {
-        String content = "{\"isbn\":\"1234567890\"}";
+        String content = "{\"isbn\":\"1234567890\", \"quantity\":\"1\"}";
         assertThat(this.json.parse(content))
-                .usingRecursiveComparison().isEqualTo(new OrderRequest("1234567890"));
+                .usingRecursiveComparison().isEqualTo(new OrderRequest("1234567890", 1));
     }
 }

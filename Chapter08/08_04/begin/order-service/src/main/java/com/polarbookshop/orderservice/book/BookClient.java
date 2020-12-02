@@ -13,7 +13,7 @@ public class BookClient {
 
 	public BookClient(BookClientProperties bookClientProperties, WebClient.Builder webClientBuilder) {
 		this.webClient = webClientBuilder
-				.defaultHeader("Content-Type", "application/json; charset=utf-8")
+				.defaultHeader("Accept", "application/json; charset=utf-8")
 				.baseUrl(bookClientProperties.getBookServiceUrl().toString())
 				.build();
 	}

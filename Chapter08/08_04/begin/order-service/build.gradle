@@ -20,7 +20,6 @@ repositories {
 
 ext {
 	set('testcontainersVersion', "1.15.0")
-	//set('okhttpVersion', "3.14.9")
 }
 
 dependencies {
@@ -37,7 +36,7 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"
+	testImplementation 'com.squareup.okhttp3:mockwebserver:3.14.9'
 	testImplementation 'org.testcontainers:postgresql'
 	testImplementation 'io.projectreactor:reactor-test'
 }

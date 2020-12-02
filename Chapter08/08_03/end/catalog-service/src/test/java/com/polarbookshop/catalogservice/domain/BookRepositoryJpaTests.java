@@ -1,15 +1,16 @@
 package com.polarbookshop.catalogservice.domain;
 
+import java.time.Year;
+import java.util.Collection;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.TestPropertySource;
-
-import java.time.Year;
-import java.util.Collection;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,8 +28,8 @@ class BookRepositoryJpaTests {
 
     @Test
     void findAllOrderByTitle() {
-        Book expectedBook1 = new Book("1234561235", "Title", "Author", Year.of(2000), 12.90);
-        Book expectedBook2 = new Book("1234561235", "Another Title", "Author", Year.of(2000), 12.90);
+        Book expectedBook1 = new Book(null, "1234561235", "Title", "Author", Year.of(2000), 12.90);
+        Book expectedBook2 = new Book(null, "1234561235", "Another Title", "Author", Year.of(2000), 12.90);
         entityManager.persist(expectedBook1);
         entityManager.persist(expectedBook2);
 
@@ -40,7 +41,7 @@ class BookRepositoryJpaTests {
     @Test
     void findBookByIsbnWhenExisting() {
         String bookIsbn = "1234561235";
-        Book expectedBook = new Book(bookIsbn, "Title", "Author", Year.of(2000), 12.90);
+        Book expectedBook = new Book(null, bookIsbn, "Title", "Author", Year.of(2000), 12.90);
         entityManager.persist(expectedBook);
 
         Optional<Book> actualBook = bookRepository.findByIsbn(bookIsbn);
@@ -58,7 +59,7 @@ class BookRepositoryJpaTests {
     @Test
     void existsByIsbnWhenExisting() {
         String bookIsbn = "1234561235";
-        Book bookToCreate = new Book(bookIsbn, "Title", "Author", Year.of(2000), 12.90);
+        Book bookToCreate = new Book(null, bookIsbn, "Title", "Author", Year.of(2000), 12.90);
         entityManager.persist(bookToCreate);
 
         boolean existing = bookRepository.existsByIsbn(bookIsbn);
@@ -75,7 +76,7 @@ class BookRepositoryJpaTests {
     @Test
     void deleteByIsbn() {
         String bookIsbn = "1234561235";
-        Book bookToCreate = new Book(bookIsbn, "Title", "Author", Year.of(2000), 12.90);
+        Book bookToCreate = new Book(null, bookIsbn, "Title", "Author", Year.of(2000), 12.90);
         Book persistedBook = entityManager.persist(bookToCreate);
 
         bookRepository.deleteByIsbn(bookIsbn);

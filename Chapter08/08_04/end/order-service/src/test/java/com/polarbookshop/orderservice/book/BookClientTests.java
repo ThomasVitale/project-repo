@@ -1,17 +1,16 @@
 package com.polarbookshop.orderservice.book;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import org.springframework.web.reactive.function.client.WebClient;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BookClientTests {
 
@@ -43,10 +42,12 @@ class BookClientTests {
 
 		mockWebServer.enqueue(mockResponse);
 
-		Optional<Book> book = bookClient.getBookByIsbn(bookIsbn);
+		Mono<Book> book = bookClient.getBookByIsbn(bookIsbn);
 
-		assertThat(book).isPresent();
-		assertThat(book.get().getIsbn()).isEqualTo(bookIsbn);
+		StepVerifier.create(book)
+				.expectNextCount(1)
+				.expectNextMatches(b -> b.getIsbn().equals(bookIsbn))
+				.verifyComplete();
 	}
 
 	@Test
@@ -58,8 +59,10 @@ class BookClientTests {
 
 		mockWebServer.enqueue(mockResponse);
 
-		Optional<Book> book = bookClient.getBookByIsbn(bookIsbn);
+		Mono<Book> book = bookClient.getBookByIsbn(bookIsbn);
 
-		assertThat(book).isEmpty();
+		StepVerifier.create(book)
+				.expectNextCount(0)
+				.verifyComplete();
 	}
 }

@@ -24,14 +24,14 @@ class OrderValidationTests {
 
 	@Test
 	void whenAllFieldsCorrectThenValidationSucceeds() {
-		Order order = new Order(1L, "1234567890", "Book Name", 1, 9.90, OrderStatus.ACCEPTED);
+		Order order = new Order(1L, "1234567890", "Book Name", 9.90, 1, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).isEmpty();
 	}
 
 	@Test
 	void whenIsbnNotDefinedThenValidationFails() {
-		Order order = new Order(1L, "", "Book Name", 1, 9.90, OrderStatus.ACCEPTED);
+		Order order = new Order(1L, "", "Book Name", 9.90, 1, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage())
@@ -40,7 +40,7 @@ class OrderValidationTests {
 
 	@Test
 	void whenQuantityIsNotDefinedThenValidationFails() {
-		Order order = new Order(1L, "1234567890", "Book Name", null, 9.90, OrderStatus.ACCEPTED);
+		Order order = new Order(1L, "1234567890", "Book Name", 9.90, null, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage())
@@ -49,7 +49,7 @@ class OrderValidationTests {
 
 	@Test
 	void whenQuantityIsLowerThanMinThenValidationFails() {
-		Order order = new Order(1L, "1234567890", "Book Name", 0, 9.90, OrderStatus.ACCEPTED);
+		Order order = new Order(1L, "1234567890", "Book Name", 9.90, 0, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage())
@@ -58,7 +58,7 @@ class OrderValidationTests {
 
 	@Test
 	void whenQuantityIsGreaterThanMaxThenValidationFails() {
-		Order order = new Order(1L, "1234567890", "Book Name", 6, 9.90, OrderStatus.ACCEPTED);
+		Order order = new Order(1L, "1234567890", "Book Name", 9.90, 6, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage())
@@ -67,7 +67,7 @@ class OrderValidationTests {
 
 	@Test
 	void whenStatusIsNotDefinedThenValidationFails() {
-		Order order = new Order(1L, "1234567890", "Book Name", 1, 9.90, null);
+		Order order = new Order(1L, "1234567890", "Book Name", 9.90, 1, null);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage())
@@ -76,7 +76,7 @@ class OrderValidationTests {
 
 	@Test
 	void whenOptionalFieldsNotDefinedThenValidationSucceeds() {
-		Order order = new Order(null, "1234567890", "", 1, null, OrderStatus.ACCEPTED);
+		Order order = new Order(null, "1234567890", "", null, 1, OrderStatus.ACCEPTED);
 		Set<ConstraintViolation<Order>> violations = validator.validate(order);
 		assertThat(violations).isEmpty();
 	}

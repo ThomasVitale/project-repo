@@ -23,7 +23,7 @@ class OrderControllerIntegrationTests {
 	@Test
 	void whenGetRequestWithIdThenOrderReturned() {
 		// Given
-		OrderRequest orderRequest = new OrderRequest("1234567891");
+		OrderRequest orderRequest = new OrderRequest("1234567891", 1);
 		Order expectedOrder = restTemplate.postForEntity("/orders", orderRequest, Order.class).getBody();
 		assertThat(expectedOrder).isNotNull();
 
@@ -39,8 +39,7 @@ class OrderControllerIntegrationTests {
 	@Test
 	void whenPostRequestThenBookCreated() {
 		// Given
-		String bookIsbn = "1234567891";
-		OrderRequest orderRequest = new OrderRequest(bookIsbn);
+		OrderRequest orderRequest = new OrderRequest("1234567891", 1);
 
 		// When
 		ResponseEntity<Order> response = restTemplate.postForEntity("/orders", orderRequest, Order.class);
@@ -48,7 +47,8 @@ class OrderControllerIntegrationTests {
 		// Then
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().getBookIsbn()).isEqualTo(bookIsbn);
+		assertThat(response.getBody().getBookIsbn()).isEqualTo(orderRequest.getIsbn());
+		assertThat(response.getBody().getQuantity()).isEqualTo(orderRequest.getQuantity());
 		assertThat(response.getBody().getStatus()).isEqualTo(OrderStatus.REJECTED);
 	}
 }

@@ -1,12 +1,11 @@
 package com.polarbookshop.orderservice.order.web;
 
-import java.util.Optional;
-
 import com.polarbookshop.orderservice.book.Book;
 import com.polarbookshop.orderservice.book.BookClient;
 import com.polarbookshop.orderservice.order.domain.Order;
 import com.polarbookshop.orderservice.order.domain.OrderStatus;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -34,13 +33,13 @@ class OrderControllerIntegrationTests {
 		// Given
 		String bookIsbn = "1234567890";
 		Book book = new Book(bookIsbn, "Title", "Author", 9.90);
-		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Optional.of(book));
-		OrderRequest orderRequest = new OrderRequest(bookIsbn);
+		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Mono.just(book));
+		OrderRequest orderRequest = new OrderRequest(bookIsbn, 1);
 		Order expectedOrder = webTestClient.post().uri("/orders")
 				.bodyValue(orderRequest)
 				.exchange()
 				.expectStatus().is2xxSuccessful()
-				.returnResult(Order.class).getResponseBody().blockFirst();
+				.expectBody(Order.class).returnResult().getResponseBody();
 		assertThat(expectedOrder).isNotNull();
 
 		// When
@@ -55,12 +54,12 @@ class OrderControllerIntegrationTests {
 	}
 
 	@Test
-	void whenPostRequestAndBookExistsThenOrderInProgress() {
+	void whenPostRequestAndBookExistsThenOrderAccepted() {
 		// Given
 		String bookIsbn = "1234567891";
 		Book book = new Book(bookIsbn, "Title", "Author", 9.90);
-		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Optional.of(book));
-		OrderRequest orderRequest = new OrderRequest(bookIsbn);
+		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Mono.just(book));
+		OrderRequest orderRequest = new OrderRequest(bookIsbn, 3);
 
 		// When
 		Order createdOrder = webTestClient.post().uri("/orders")
@@ -71,16 +70,19 @@ class OrderControllerIntegrationTests {
 
 		// Then
 		assertThat(createdOrder).isNotNull();
-		assertThat(createdOrder.getBookIsbn()).isEqualTo(bookIsbn);
-		assertThat(createdOrder.getStatus()).isEqualTo(OrderStatus.IN_PROGRESS);
+		assertThat(createdOrder.getBookIsbn()).isEqualTo(orderRequest.getIsbn());
+		assertThat(createdOrder.getQuantity()).isEqualTo(orderRequest.getQuantity());
+		assertThat(createdOrder.getBookName()).isEqualTo(book.getTitle() + " - " + book.getAuthor());
+		assertThat(createdOrder.getBookPrice()).isEqualTo(book.getPrice());
+		assertThat(createdOrder.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
 	}
 
 	@Test
 	void whenPostRequestAndBookNotExistsThenOrderRejected() {
 		// Given
 		String bookIsbn = "1234567892";
-		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Optional.empty());
-		OrderRequest orderRequest = new OrderRequest(bookIsbn);
+		given(bookClient.getBookByIsbn(bookIsbn)).willReturn(Mono.empty());
+		OrderRequest orderRequest = new OrderRequest(bookIsbn, 3);
 
 		// When
 		Order createdOrder = webTestClient.post().uri("/orders")
@@ -91,7 +93,8 @@ class OrderControllerIntegrationTests {
 
 		// Then
 		assertThat(createdOrder).isNotNull();
-		assertThat(createdOrder.getBookIsbn()).isEqualTo(bookIsbn);
+		assertThat(createdOrder.getBookIsbn()).isEqualTo(orderRequest.getIsbn());
+		assertThat(createdOrder.getQuantity()).isEqualTo(orderRequest.getQuantity());
 		assertThat(createdOrder.getStatus()).isEqualTo(OrderStatus.REJECTED);
 	}
 }

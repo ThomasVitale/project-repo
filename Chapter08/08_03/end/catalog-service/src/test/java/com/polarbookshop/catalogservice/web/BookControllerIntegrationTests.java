@@ -25,7 +25,7 @@ class BookControllerIntegrationTests {
     void whenGetRequestWithIdThenBookReturned() {
         // Given
         String bookIsbn = "1231231230";
-        Book expectedBook = new Book(bookIsbn, "Book Title", "Book Author", Year.of(1991), 9.90);
+        Book expectedBook = new Book(null, bookIsbn, "Book Title", "Book Author", Year.of(1991), 9.90);
         restTemplate.postForEntity("/books", expectedBook, Book.class);
 
         // When
@@ -40,7 +40,7 @@ class BookControllerIntegrationTests {
     @Test
     void whenPostRequestThenBookCreated() {
         // Given
-        Book expectedBook = new Book("1231231231", "Book Title", "Book Author", Year.of(1991), 9.90);
+        Book expectedBook = new Book(null, "1231231231", "Book Title", "Book Author", Year.of(1991), 9.90);
 
         // When
         ResponseEntity<Book> response = restTemplate.postForEntity("/books", expectedBook, Book.class);
@@ -54,7 +54,7 @@ class BookControllerIntegrationTests {
     @Test
     void whenPutRequestThenBookUpdated() {
         // Given
-        Book expectedBook = new Book("1231231232", "Book Title", "Book Author", Year.of(1991), 9.90);
+        Book expectedBook = new Book(null, "1231231232", "Book Title", "Book Author", Year.of(1991), 9.90);
         ResponseEntity<Book> postResponse = restTemplate.postForEntity("/books", expectedBook, Book.class);
         Book createdBook = postResponse.getBody();
         Objects.requireNonNull(createdBook).setPublishingYear(Year.of(1990));
@@ -73,7 +73,7 @@ class BookControllerIntegrationTests {
     void whenDeleteRequestThenBookDeleted() {
         // Given
         String bookIsbn = "1231231233";
-        Book expectedBook = new Book(bookIsbn, "Book Title", "Book Author", Year.of(1973), 9.90);
+        Book expectedBook = new Book(null, bookIsbn, "Book Title", "Book Author", Year.of(1973), 9.90);
         restTemplate.postForEntity("/books", expectedBook, Book.class);
 
         // When

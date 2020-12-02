@@ -16,7 +16,7 @@ spring:
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 20
-      pool-name: polardb-pool
+      pool-name: polardb-order-pool
   jpa:
     hibernate:
       ddl-auto: validate
