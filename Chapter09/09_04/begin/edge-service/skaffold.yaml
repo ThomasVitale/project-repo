@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2beta8
+kind: Config
+metadata:
+  name: edge-service
+build:
+  artifacts:
+    - image: thomasvitale/edge-service
+      custom:
+      buildpacks:
+        builder: gcr.io/base-platform-api/builder:base-platform-api-0.3
+        env:
+          - BP_JVM_VERSION=11.*
+        dependencies:
+          paths:
+            - src
+            - build.gradle
+deploy:
+  kubectl:
+    manifests:
+    - k8s/edge-deployment.yml
+    - k8s/edge-service.yml

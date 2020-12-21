@@ -1,0 +1,27 @@
+server:
+  port: 9002
+  tomcat:
+    accept-count: 100
+    connection-timeout: 2000
+    max-connections: 8192
+    threads:
+      max: 200
+      min-spare: 10
+
+spring:
+  datasource:
+    username: admin
+    password: admin
+    url: jdbc:postgresql://localhost:5433/polardb_order
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 20
+      pool-name: polardb-order-pool
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+polar:
+  book-service-url: "http://localhost:9001"
+
+debug: true
