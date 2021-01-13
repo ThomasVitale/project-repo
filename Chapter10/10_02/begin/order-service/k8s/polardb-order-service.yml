@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: polardb-order-service
+  labels:
+    db: polardb-order
+spec:
+  type: ClusterIP
+  selector:
+    db: polardb-order
+  ports:
+  - port: 5432
+    targetPort: 5432
