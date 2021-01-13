@@ -1,0 +1,10 @@
+server:
+  port: 9003
+  shutdown: graceful
+  netty:
+    connection-timeout: 2s
+
+spring:
+  cloud:
+    function:
+      definition: pack|label

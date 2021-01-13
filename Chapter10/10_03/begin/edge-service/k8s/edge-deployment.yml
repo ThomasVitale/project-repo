@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-deployment
+  labels:
+    app: edge-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edge-service
+  template:
+    metadata:
+      labels:
+        app: edge-service
+    spec:
+      containers:
+      - name: edge-service
+        image: polarbookshop/edge-service:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 9000
+        env:
+        - name: CATALOG_SERVICE_URL
+          value: http://catalog-service
+        - name: ORDER_SERVICE_URL
+          value: http://order-service

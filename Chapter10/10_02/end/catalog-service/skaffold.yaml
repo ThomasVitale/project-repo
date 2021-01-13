@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta8
+kind: Config
+metadata:
+  name: catalog-service
+build:
+  artifacts:
+    - image: polarbookshop/catalog-service
+      custom:
+      buildpacks:
+        builder: gcr.io/paketo-buildpacks/builder:base-platform-api-0.3
+        env:
+          - BP_JVM_VERSION=11.*
+        dependencies:
+          paths:
+            - src
+            - build.gradle
+deploy:
+  kubectl:
+    manifests:
+    - k8s/catalog-deployment.yml
+    - k8s/catalog-service.yml
+    - k8s/polardb-catalog-deployment.yml
+    - k8s/polardb-catalog-service.yml
