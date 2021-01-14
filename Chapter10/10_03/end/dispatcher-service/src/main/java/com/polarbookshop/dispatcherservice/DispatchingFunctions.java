@@ -23,7 +23,7 @@ public class DispatchingFunctions {
 	@Bean
 	public Function<Flux<Long>, Flux<OrderDispatchedMessage>> label() {
 		return orderFlux -> orderFlux.map(orderId -> {
-			log.info("The order with id " + orderId + " is labelled.");
+			log.info("The order with id " + orderId + " is labeled.");
 			return new OrderDispatchedMessage(orderId);
 		});
 	}

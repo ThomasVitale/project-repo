@@ -20,9 +20,9 @@ class DispatchingFunctionsIntegrationTests {
 
 	@Test
 	void packOrder() {
-		Function<OrderCreatedMessage, Long> pack = catalog.lookup(Function.class, "pack");
+		Function<OrderAcceptedMessage, Long> pack = catalog.lookup(Function.class, "pack");
 		long orderId = 121;
-		assertThat(pack.apply(new OrderCreatedMessage(orderId))).isEqualTo(orderId);
+		assertThat(pack.apply(new OrderAcceptedMessage(orderId))).isEqualTo(orderId);
 	}
 
 	@Test
@@ -38,11 +38,11 @@ class DispatchingFunctionsIntegrationTests {
 
 	@Test
 	void packAndLabelOrder() {
-		Function<OrderCreatedMessage, Flux<OrderDispatchedMessage>> packAndLabel =
+		Function<OrderAcceptedMessage, Flux<OrderDispatchedMessage>> packAndLabel =
 				catalog.lookup(Function.class, "pack|label");
 		long orderId = 121;
 
-		StepVerifier.create(packAndLabel.apply(new OrderCreatedMessage(orderId)))
+		StepVerifier.create(packAndLabel.apply(new OrderAcceptedMessage(orderId)))
 				.expectNextMatches(dispatchedOrder ->
 						dispatchedOrder.equals(new OrderDispatchedMessage(orderId)))
 				.verifyComplete();

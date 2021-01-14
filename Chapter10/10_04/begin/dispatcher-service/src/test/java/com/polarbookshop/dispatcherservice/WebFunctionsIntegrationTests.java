@@ -18,13 +18,13 @@ class WebFunctionsIntegrationTests {
 	@Test
 	void whenOrderCreatedThenDispatch() {
 		long orderId = 121L;
-		OrderCreatedMessage orderCreatedMessage = new OrderCreatedMessage(121L);
+		OrderAcceptedMessage orderAcceptedMessage = new OrderAcceptedMessage(121L);
 		OrderDispatchedMessage expectedOrderDispatchedMessage = new OrderDispatchedMessage(orderId);
 
 		webTestClient
 				.post()
 				.uri("/")
-				.body(Mono.just(orderCreatedMessage), OrderCreatedMessage.class)
+				.body(Mono.just(orderAcceptedMessage), OrderAcceptedMessage.class)
 				.exchange()
 				.expectStatus().isOk()
 				.expectBodyList(OrderDispatchedMessage.class)

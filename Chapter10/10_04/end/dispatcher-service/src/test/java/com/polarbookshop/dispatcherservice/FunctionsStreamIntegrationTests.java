@@ -21,9 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FunctionsStreamIntegrationTests {
 
 	@Autowired
+	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	private InputDestination input;
 
 	@Autowired
+	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	private OutputDestination output;
 
 	@Autowired

@@ -13,17 +13,17 @@ import org.springframework.context.annotation.Configuration;
 public class DispatchingFunctions {
 
 	@Bean
-	public Function<OrderCreatedMessage, Long> pack() {
-		return orderCreatedMessage -> {
-			log.info("The order with id " + orderCreatedMessage.getOrderId() + " is packed.");
-			return orderCreatedMessage.getOrderId();
+	public Function<OrderAcceptedMessage, Long> pack() {
+		return orderAcceptedMessage -> {
+			log.info("The order with id " + orderAcceptedMessage.getOrderId() + " is packed.");
+			return orderAcceptedMessage.getOrderId();
 		};
 	}
 
 	@Bean
 	public Function<Flux<Long>, Flux<OrderDispatchedMessage>> label() {
 		return orderFlux -> orderFlux.map(orderId -> {
-			log.info("The order with id " + orderId + " is labelled.");
+			log.info("The order with id " + orderId + " is labeled.");
 			return new OrderDispatchedMessage(orderId);
 		});
 	}
