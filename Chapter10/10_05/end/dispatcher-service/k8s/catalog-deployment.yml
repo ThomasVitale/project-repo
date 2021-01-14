@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatcher-deployment
+  labels:
+    app: dispatcher-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dispatcher-service
+  template:
+    metadata:
+      labels:
+        app: dispatcher-service
+    spec:
+      containers:
+      - name: dispatcher-service
+        image: polarbookshop/dispatcher-service:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 9003

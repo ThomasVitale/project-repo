@@ -1,0 +1,46 @@
+server:
+  port: 9002
+  tomcat:
+    accept-count: 100
+    connection-timeout: 2000
+    max-connections: 8192
+    threads:
+      max: 200
+      min-spare: 10
+
+spring:
+  datasource:
+    username: admin
+    password: admin
+    url: jdbc:postgresql://localhost:5433/polardb_order
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 20
+      pool-name: polardb-order-pool
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  cloud:
+    function:
+      definition: dispatchOrder
+    stream:
+      bindings:
+        dispatchOrder-in-0:
+          destination: order-dispatched
+          group: polar-orderer
+      rabbit:
+        bindings:
+          order-accepted:
+            producer:
+              transacted: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    connection-timeout: 15s
+
+polar:
+  catalog-service-url: "http://localhost:9001"
+
+debug: true
