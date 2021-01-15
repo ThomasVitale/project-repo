@@ -18,6 +18,7 @@ public class OrderEventService {
 
 	public void publishOrderAcceptedEvent(Order order) {
 		OrderAcceptedMessage orderAcceptedMessage = new OrderAcceptedMessage(order.getId());
+		log.info("Sending order accepted event with id: " + order.getId());
 		this.streamBridge.send("order-accepted", orderAcceptedMessage);
 	}
 }

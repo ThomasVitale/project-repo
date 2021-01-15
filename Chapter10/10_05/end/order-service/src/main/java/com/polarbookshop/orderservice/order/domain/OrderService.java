@@ -5,17 +5,21 @@ import java.util.Optional;
 
 import com.polarbookshop.orderservice.book.Book;
 import com.polarbookshop.orderservice.book.BookClient;
+import com.polarbookshop.orderservice.order.event.OrderEventService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class OrderService {
 
 	private final BookClient bookClient;
 	private final OrderRepository orderRepository;
+	private final OrderEventService orderEventService;
 
 	public Collection<Order> getAllOrders() {
 		return orderRepository.findAll();
@@ -38,7 +42,10 @@ public class OrderService {
 	public Order submitOrder(String isbn, int quantity) {
 		Order orderToSubmit = generateOrder(isbn, quantity);
 		Order savedOrder = orderRepository.save(orderToSubmit);
-		orderEventService.publishOrderAcceptedEvent(savedOrder);
+		if (savedOrder.getStatus().equals(OrderStatus.ACCEPTED)) {
+			log.info("The order with id {} is accepted.", savedOrder.getId());
+			orderEventService.publishOrderAcceptedEvent(savedOrder);
+		}
 		return savedOrder;
 	}
 

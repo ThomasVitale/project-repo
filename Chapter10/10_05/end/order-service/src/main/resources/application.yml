@@ -42,5 +42,3 @@ spring:
 
 polar:
   catalog-service-url: "http://localhost:9001"
-
-debug: true

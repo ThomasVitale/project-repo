@@ -69,3 +69,12 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
+  dispatcher-service:
+    image: polarbookshop/dispatcher-service:0.0.1-SNAPSHOT
+    container_name: dispatcher-service
+    ports:
+      - 8003:8003
+    environment:
+      # JVM environment variable to enable debug through a socket on port 8000
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8003
+      - SPRING_RABBITMQ_HOST=polarmq-rabbit
