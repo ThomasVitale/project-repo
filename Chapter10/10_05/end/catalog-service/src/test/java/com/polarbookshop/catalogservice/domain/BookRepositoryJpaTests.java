@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.Collection;
 import java.util.Optional;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +36,7 @@ class BookRepositoryJpaTests {
 
         Collection<Book> actualBooks = bookRepository.findAllOrderByTitle();
 
-        assertThat(actualBooks).hasSize(2);
+        assertThat(actualBooks).asList().containsAll(List.of(expectedBook1, expectedBook2));
     }
 
     @Test
